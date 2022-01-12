@@ -13,15 +13,13 @@ import pandas as pd
 import numpy as np
 import math
 import pickle
-import joblib
-import cloudpickle
+import shap
 import requests
 import json
 import seaborn as sns
 import matplotlib.pyplot as plt
 #from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
-import shap
 
 
 ### Import des donnees
@@ -55,10 +53,17 @@ app = train.append(test).reset_index(drop=True)
 pk_kn_in = open('../Results/knn.pkl','rb')
 knn = pickle.load(pk_kn_in)
 
+# Chargement du modèle de classification
+pk_mdl_in = open('../Results/model.pkl','rb')
+model = pickle.load(pk_mdl_in)
 
 # Explainer
-pk_ex_in = open('../Results/explainer.mdl','rb')
-explainer = shap.Explainer.load(pk_ex_in,model_loader="auto",masker_loader="auto")
+X_train_sm = pd.read_csv('../Results/X_train_sm.csv')
+X_name = list(X_train_sm.columns)
+explainer = shap.TreeExplainer(model,X_train_sm)
+del X_train_sm
+#explainer = shap.Explainer.load(open('../Results/explainer','rb'),model_loader="auto",masker_loader="auto")
+
 
 # Features
 features =['AGE', 'YEARS_EMPLOYED', 'AMT_INCOME_TOTAL', 'AMT_ANNUITY', 'AMT_CREDIT']
@@ -189,10 +194,16 @@ def radat_knn_plot(ID,fig,features=features,fill=False):
     if fill:
         radar.fill(client, alpha=0.2)
         
-def shart_plot(ID):
-    app_id = get_data(app,ID)
+def shap_id(ID):
+    app_id = get_data(app,ID)[X_name]
     shap_vals = explainer.shap_values(app_id)
-    shap.bar_plot(shap_vals[1][0],feature_names=app_id.columns)
+    shap.bar_plot(shap_vals[1][0],feature_names=X_name,max_display=10)
+    #shap.force_plot(explainer.expected_value[1], shap_vals[1], app_id)
+    
+def shap_all():
+    app_all = app[X_name]
+    shap_values = explainer.shap_values(app_all)
+    shap.summary_plot(shap_values,feature_names=feats,max_display=10)
 
 
 ### DASHBOARD
@@ -257,7 +268,7 @@ if analyse == 'Client':
                                 st.error('Client non solvable _(Target = 1)_, prédiction de difficultés à **' + str(prediction["risk"] * 100) + '%**')  
                             st.write('**Interprétabilité**')
                             fig = plt.figure(figsize=(2,2))
-                            st.pyplot(shap_plot(ID))
+                            st.pyplot(shap_id(ID))
                         except :
                             st.warning('Erreur programme') 
                             st.write(':dizzy_face:')                                               
@@ -322,4 +333,9 @@ elif analyse == 'Portefeuille':
                 plt.setp(pt.get_xticklabels(),fontsize=4)
                 plt.setp(pt.get_yticklabels(),fontsize=4)                
                 st.pyplot(fig)
+        st.markdown("""---""")
+        with st.container():
+            st.write('**Interprétabilité**')
+            fig = plt.figure(figsize=(3,3))
+            st.pyplot(shap_all())
         
