@@ -169,7 +169,7 @@ def radat_id_plot(ID,fig,features=features,fill=False):
               (client['AMT_CREDIT']-500, client['AMT_CREDIT']+500)]
     
     radar = ComplexRadar(fig,features,ranges)
-    radar.plot(client,linewidth=3,color='blue')
+    radar.plot(client,linewidth=3,color='darkseagreen')
     if fill:
         radar.fill(client, alpha=0.2)
         
@@ -187,9 +187,9 @@ def radat_knn_plot(ID,fig,features=features,fill=False):
               (min(data_knn['AMT_CREDIT'])-500,  max(data_knn['AMT_CREDIT'])+500)]
     
     radar = ComplexRadar(fig,features,ranges)
-    radar.plot(data_id,linewidth=3,label='Client '+str(ID),color='blue')
+    radar.plot(data_id,linewidth=3,label='Client '+str(ID),color='darkseagreen')
     radar.plot(moy_knn.iloc[1][features],linewidth=3,label='Client similaire moyen avec difficultés',color='red')
-    radar.plot(moy_knn.iloc[0][features],linewidth=3,label='Client similaire moyen sans difficultés',color='green')
+    radar.plot(moy_knn.iloc[0][features],linewidth=3,label='Client similaire moyen sans difficultés',color='royalblue')
     fig.legend(fontsize=5,loc='upper center',bbox_to_anchor=(0.5, -0.05),fancybox=True, shadow=True, ncol=5)
     if fill:
         radar.fill(client, alpha=0.2)
@@ -203,7 +203,7 @@ def shap_id(ID):
 def shap_all():
     app_all = app[X_name]
     shap_values = explainer.shap_values(app_all)
-    shap.summary_plot(shap_values,feature_names=feats,max_display=10)
+    shap.summary_plot(shap_values,feature_names=X_name,max_display=10)
 
 
 ### DASHBOARD
@@ -286,7 +286,7 @@ elif analyse == 'Portefeuille':
             with col1:
                 fig = plt.figure(figsize=(4,4))
                 bins = (raw_app['AGE'].max()-raw_app['AGE'].min())//5
-                pt = sns.histplot(data=raw_app, x='AGE', hue='TARGET',bins=bins,palette=['green','red'],alpha=.5)
+                pt = sns.histplot(data=raw_app, x='AGE', hue='TARGET',bins=bins,palette=['royalblue','red'],alpha=.5)
                 plt.xlabel('AGE',fontsize=12)
                 plt.ylabel('')
                 plt.legend(['avec difficulté','sans difficulté'],loc='lower center',bbox_to_anchor=(0.5, -0.35),fancybox=True, shadow=True, ncol=5)
@@ -294,16 +294,16 @@ elif analyse == 'Portefeuille':
             with col2:
                 fig = plt.figure(figsize=(3,3))                
                 pt = sns.barplot(raw_app['NAME_FAMILY_STATUS'][raw_app['TARGET']==1],raw_app['CNT_CHILDREN'][raw_app['TARGET']==1],color='red',alpha=.5,ci=None,edgecolor='black')
-                pt = sns.barplot(raw_app['NAME_FAMILY_STATUS'][raw_app['TARGET']==0],raw_app['CNT_CHILDREN'][raw_app['TARGET']==0],color='green',alpha=.5,ci=None,edgecolor='black')
-                #pt = sns.barplot(x='NAME_FAMILY_STATUS', y='CNT_CHILDREN', hue='TARGET', data=raw_app,palette=['green','red'],alpha=.7)
+                pt = sns.barplot(raw_app['NAME_FAMILY_STATUS'][raw_app['TARGET']==0],raw_app['CNT_CHILDREN'][raw_app['TARGET']==0],color='royalblue',alpha=.5,ci=None,edgecolor='black')
+                #pt = sns.barplot(x='NAME_FAMILY_STATUS', y='CNT_CHILDREN', hue='TARGET', data=raw_app,palette=['royalblue','red'],alpha=.7)
                 plt.setp(pt.get_xticklabels(),rotation=45,fontsize=7)
                 plt.setp(pt.get_yticklabels(),fontsize=5)
                 st.pyplot(fig)
             with col3:
                 fig = plt.figure(figsize=(4.5,4.5))
                 pt = sns.barplot(raw_app['NAME_INCOME_TYPE'][raw_app['TARGET']==1],raw_app['AMT_INCOME_TOTAL'][raw_app['TARGET']==1],color='red',alpha=.5,ci=None,edgecolor='black')
-                pt = sns.barplot(raw_app['NAME_INCOME_TYPE'][raw_app['TARGET']==0],raw_app['AMT_INCOME_TOTAL'][raw_app['TARGET']==0],color='green',alpha=.5,ci=None,edgecolor='black')
-                #pt = sns.barplot(x='NAME_INCOME_TYPE', y='AMT_INCOME_TOTAL', hue='TARGET', data=raw_app,palette=['green','red'],alpha=.7)
+                pt = sns.barplot(raw_app['NAME_INCOME_TYPE'][raw_app['TARGET']==0],raw_app['AMT_INCOME_TOTAL'][raw_app['TARGET']==0],color='royalblue',alpha=.5,ci=None,edgecolor='black')
+                #pt = sns.barplot(x='NAME_INCOME_TYPE', y='AMT_INCOME_TOTAL', hue='TARGET', data=raw_app,palette=['royalblue','red'],alpha=.7)
                 plt.setp(pt.get_xticklabels(),rotation=45,fontsize=7)
                 plt.setp(pt.get_yticklabels(),fontsize=7)
                 st.pyplot(fig)
@@ -314,7 +314,7 @@ elif analyse == 'Portefeuille':
             col4, col5 = st.columns(2)
             with col4:
                 fig = plt.figure(figsize=(5,5))
-                plt.pie(tg_n,labels=['Avec difficultés','Sans difficultés','Aucun emprunt en cours'],colors=['red','green','blue'],autopct=lambda x:str(round(x,2))+'%')
+                plt.pie(tg_n,labels=['Avec difficultés','Sans difficultés','Aucun emprunt en cours'],colors=['red','royalblue','honeydew'],autopct=lambda x:str(round(x,2))+'%')
                 st.pyplot(fig)
             with col5:
                 df = raw_app[['TARGET','NAME_INCOME_TYPE','AMT_ANNUITY','AMT_CREDIT']]
@@ -324,7 +324,7 @@ elif analyse == 'Portefeuille':
                 tg_1 = tg_df.loc[1]
                 fig = plt.figure(figsize=(2,2))                  
                 pt = sns.scatterplot(tg_1['AMT_ANNUITY'],tg_1['AMT_CREDIT'],s=tg_1['COUNT_TG'].values/100,label='Avec Difficulté',color='red')
-                pt = sns.scatterplot(tg_0['AMT_ANNUITY'],tg_0['AMT_CREDIT'],s=tg_0['COUNT_TG'].values/100,label='Sans Difficulté',color='green',alpha=.3)
+                pt = sns.scatterplot(tg_0['AMT_ANNUITY'],tg_0['AMT_CREDIT'],s=tg_0['COUNT_TG'].values/100,label='Sans Difficulté',color='royalblue',alpha=.3)
                 plt.legend(loc='lower center',bbox_to_anchor=(0.5, -0.3),fancybox=True, shadow=True, ncol=5,fontsize=5)
                 plt.xlabel('AMT_ANNUITY',fontsize=5)
                 plt.ylabel('AMT_CREDIT',fontsize=5)
@@ -335,7 +335,7 @@ elif analyse == 'Portefeuille':
                 st.pyplot(fig)
         st.markdown("""---""")
         with st.container():
-            st.write('**Interprétabilité**')
+            st.write('#### Interprétabilité')
             fig = plt.figure(figsize=(3,3))
             st.pyplot(shap_all())
         
