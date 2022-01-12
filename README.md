@@ -9,4 +9,5 @@
 - Dashboard.py : code du dashboard avec Streamlit
 
 ## 3-Documentation du projet
-- P7_note_methodologique.pdf : note méthodologique décrivant : la méthodologie d'entraînement du modèle, la fonction coût métier, l'optimisation du modèle, l’interprétabilité du modèle, les limites et les améliorations possibles
+- P7_note_methodologique.pdf : description de la méthodologie du modèle de scoring, de son interprétabilité (globale et locale), et de ses limites et améliorations
+- P7_presentation.pdf : support de présentation
