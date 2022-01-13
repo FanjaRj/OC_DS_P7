@@ -1,5 +1,4 @@
-Flask
-request
+flask
 numpy
 pandas
 sklearn
