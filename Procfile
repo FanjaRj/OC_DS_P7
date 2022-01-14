@@ -1,1 +1,1 @@
-web: gunicorn --preload --bind 0.0.0.0:$PORT wsgi:appy
+web: sh setup.sh && streamlit run Dashboard/dashboard.py
