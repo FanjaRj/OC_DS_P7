@@ -3,3 +3,11 @@ numpy
 pandas
 sklearn
 gunicorn
+streamlit
+math
+pickle
+shap
+json
+seaborn
+matplotlib
+zipfile
