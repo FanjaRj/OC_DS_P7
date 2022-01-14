@@ -20,6 +20,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 #from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
+from zipfile import ZipFile
 
 
 ### Import des donnees
@@ -31,8 +32,10 @@ feat = ['SK_ID_CURR','TARGET','DAYS_BIRTH','NAME_FAMILY_STATUS','CNT_CHILDREN',
 num_rows = 150000
 
 # Original Data
-raw_train = pd.read_csv('../Dataset/application_train.csv',usecols=feat,nrows=num_rows)
-raw_test = pd.read_csv('../Dataset/application_train.csv',usecols=[f for f in feat if f!='TARGET'])
+zip_file = ZipFile('Dataset/application_train.zip')
+raw_train = pd.read_csv(zip_file.open('application_train.csv'),usecols=feat,nrows=num_rows)
+zip_file = ZipFile('Dataset/application_test.zip')
+raw_test = pd.read_csv(zip_file.open('application_test.csv'),usecols=[f for f in feat if f!='TARGET'])
 raw_app = raw_train.append(raw_test).reset_index(drop=True)
 del raw_train
 del raw_test
@@ -45,24 +48,28 @@ raw_app['CREDIT'] = raw_app['AMT_CREDIT'].apply(lambda x: 'No' if math.isnan(x) 
 raw_app = raw_app.drop(['DAYS_BIRTH','DAYS_EMPLOYED'], axis=1)
 
 # Treated Data
-train = pd.read_csv('../Results/data_train.csv')
-test = pd.read_csv('../Results/data_test.csv')
+zip_file = ZipFile('Results/data_train.zip')
+train = pd.read_csv(zip_file.open('data_train.csv'))
+zip_file = ZipFile('Results/data_test.zip')
+test = pd.read_csv(zip_file.open('data_test.csv'))
 app = train.append(test).reset_index(drop=True)
 
 # Modele voisin
-pk_kn_in = open('../Results/knn.pkl','rb')
+zip_file = ZipFile('Results/knn.zip')
+pk_kn_in = zip_file.open('knn.pkl')
 knn = pickle.load(pk_kn_in)
 
 # Chargement du modèle de classification
-pk_mdl_in = open('../Results/model.pkl','rb')
+pk_mdl_in = open('Results/model.pkl','rb')
 model = pickle.load(pk_mdl_in)
 
 # Explainer
-X_train_sm = pd.read_csv('../Results/X_train_sm.csv')
+zip_file = ZipFile('Results/X_train_sm.zip')
+X_train_sm = pd.read_csv(zip_file.open('X_train_sm.csv'))
 X_name = list(X_train_sm.columns)
 explainer = shap.TreeExplainer(model,X_train_sm)
 del X_train_sm
-#explainer = shap.Explainer.load(open('../Results/explainer','rb'),model_loader="auto",masker_loader="auto")
+#explainer = shap.Explainer.load(open('Results/explainer','rb'),model_loader="auto",masker_loader="auto")
 
 
 # Features
