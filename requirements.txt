@@ -2,5 +2,4 @@ flask
 numpy
 pandas
 sklearn
-zipfile
 gunicorn
