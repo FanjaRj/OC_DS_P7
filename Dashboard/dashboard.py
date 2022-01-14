@@ -273,7 +273,7 @@ if analyse == 'Client':
                     with st.spinner('Calcul...'):
                         try:
                             # http://127.0.01:5000/ is from the flask api
-                            prediction = requests.get("http://127.0.0.1:5000/predict?ID=" + str(ID)).json()
+                            prediction = requests.get("https://p7flaskapi.herokuapp.com/predict?ID=" + str(ID)).json()
                             if prediction["target"]==0:
                                 st.write(':smiley:')
                                 st.success('Client solvable _(Target = 0)_, prédiction de difficultés à **' + str(prediction["risk"] * 100) + '%**')
