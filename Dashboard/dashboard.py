@@ -55,9 +55,8 @@ test = pd.read_csv(zip_file.open('data_test.csv'))
 app = train.append(test).reset_index(drop=True)
 
 # Modele voisin
-zip_file = ZipFile('Results/knn.zip')
-pk_kn_in = zip_file.open('knn.pkl')
-knn = pickle.load(pk_kn_in)
+knn = NearestNeighbors(n_neighbors=10)
+knn.fit(train.drop(['SK_ID_CURR','TARGET'], axis=1))
 
 # Chargement du modèle de classification
 pk_mdl_in = open('Results/model.pkl','rb')
