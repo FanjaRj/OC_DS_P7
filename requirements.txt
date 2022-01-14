@@ -1,9 +1,11 @@
-flask
-numpy
-pandas
-sklearn
-gunicorn
 streamlit
+pandas
+numpy
+math
+pickle
 shap
+requests
+json
 seaborn
 matplotlib
+zipfile
