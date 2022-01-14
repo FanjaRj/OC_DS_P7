@@ -64,10 +64,18 @@ pk_mdl_in = open('Results/model.pkl','rb')
 model = pickle.load(pk_mdl_in)
 
 # Explainer
-zip_file = ZipFile('Results/X_train_sm.zip')
-X_train_sm = pd.read_csv(zip_file.open('X_train_sm.csv'))
+zip_file = ZipFile('Results/X_train_sm_0.zip')
+X_train_sm_0 = pd.read_csv(zip_file.open('X_train_sm_0.csv'))
+zip_file = ZipFile('Results/X_train_sm_1.zip')
+X_train_sm_1 = pd.read_csv(zip_file.open('X_train_sm_1.csv'))
+zip_file = ZipFile('Results/X_train_sm_2.zip')
+X_train_sm_2 = pd.read_csv(zip_file.open('X_train_sm_2.csv'))
+X_train_sm = X_train_sm_0.append(X_train_sm_1).reset_index(drop=True).append(X_train_sm_2).reset_index(drop=True)
 X_name = list(X_train_sm.columns)
 explainer = shap.TreeExplainer(model,X_train_sm)
+del X_train_sm_0
+del X_train_sm_1
+del X_train_sm_2
 del X_train_sm
 #explainer = shap.Explainer.load(open('Results/explainer','rb'),model_loader="auto",masker_loader="auto")
 
