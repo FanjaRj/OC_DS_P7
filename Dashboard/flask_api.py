@@ -10,8 +10,8 @@ from zipfile import ZipFile
 app = Flask(__name__)
 
 # Chargement des données
-zip_file = ZipFile('data_selected.zip')
-data = pd.read_csv(zip_file.open('../Results/data_selected.csv'))
+zip_file = ZipFile('../Results/data_selected.zip')
+data = pd.read_csv(zip_file.open('data_selected.csv'))
 feats = [c for c in data.columns if c not in ['TARGET','SK_ID_CURR']]
 
 # Chargement du modèle de classification
