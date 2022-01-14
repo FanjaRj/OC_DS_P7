@@ -25,19 +25,19 @@ def home():
 
 @app.route("/predict")
 def predict_target():
-    ID = int(request.args.get('ID'))
-    try :
-        ID_data = data[data['SK_ID_CURR']==ID]
-        ID_to_predict = ID_data[feats]
-        prediction = model.predict(ID_to_predict)
-        proba = model.predict_proba(ID_to_predict)
-        if (prediction == 0) | (prediction == 1):
-            res =  '{ "target":'+str(int(prediction))+', "risk":%.2f }'%tuple(proba[0])[1]
-        else :
-            res = "Erreur du programme !"
-        return res
-    except:
-        return "Client introuvable !"
+	ID = int(request.args.get('ID'))
+	try :
+		ID_data = data[data['SK_ID_CURR']==ID]
+		ID_to_predict = ID_data[feats]
+		prediction = model.predict(ID_to_predict)
+		proba = model.predict_proba(ID_to_predict)
+		if (prediction == 0) | (prediction == 1):
+			res =  '{ "target":'+str(int(prediction))+', "risk":%.2f }'%tuple(proba[0])[1]
+		else :
+			res = "Erreur du programme !"
+		return res
+	except:
+		return "Client introuvable !"
 
 
 # Chargement de l'objet app
