@@ -4,8 +4,6 @@ pandas
 sklearn
 gunicorn
 streamlit
-math
-requests
 shap
 json
 seaborn
