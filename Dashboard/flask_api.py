@@ -15,7 +15,7 @@ data = pd.read_csv(zip_file.open('data_selected.csv'))
 feats = [c for c in data.columns if c not in ['TARGET','SK_ID_CURR']]
 
 # Chargement du modèle de classification
-pickle_in = open('../Results/model.pkl','rb')
+pickle_in = open('Results/model.pkl','rb')
 model = pickle.load(pickle_in)
 
 
