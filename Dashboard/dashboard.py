@@ -345,11 +345,10 @@ elif analyse == 'Portefeuille':
         with st.container():
             try:
                 app_all = app[X_name]
-                shap_values = explainer.shap_values(app_all)
-                fig = plt.figure(figsize=(3,3))
-                shap.summary_plot(shap_values,feature_names=X_name,max_display=10)
+                shap_values = explainer.shap_values(app_all)       
                 st.markdown("""---""")
                 st.write('#### Interprétabilité')
-                st.pyplot(fig)
+                fig = plt.figure(figsize=(3,3))
+                st.pyplot(shap.summary_plot(shap_values,feature_names=X_name,max_display=10))
             except:
                 st.markdown("""---""")
