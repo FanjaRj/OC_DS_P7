@@ -341,14 +341,14 @@ elif analyse == 'Portefeuille':
                 plt.ylim([400000,800000])
                 plt.setp(pt.get_xticklabels(),fontsize=4)
                 plt.setp(pt.get_yticklabels(),fontsize=4)                
-                st.pyplot(fig)
-        st.markdown("""---""")
+                st.pyplot(fig)        
         with st.container():
             try:
                 app_all = app[X_name]
                 shap_values = explainer.shap_values(app_all)
                 fig = plt.figure(figsize=(3,3))
                 shap.summary_plot(shap_values,feature_names=X_name,max_display=10)
+                st.markdown("""---""")
                 st.write('#### Interprétabilité')
                 st.pyplot(fig)
             except:
