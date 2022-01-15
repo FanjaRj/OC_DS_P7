@@ -351,4 +351,5 @@ elif analyse == 'Portefeuille':
                 shap.summary_plot(shap_values,feature_names=X_name,max_display=10)
                 st.write('#### Interprétabilité')
                 st.pyplot(fig)
-        
+            except:
+                st.markdown("""---""")
