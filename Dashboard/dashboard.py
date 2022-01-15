@@ -101,7 +101,7 @@ def get_similar_ID(ID):
 
 def get_stat_ID(ID):   
     app_knn = get_similar_ID(ID)
-    data_knn = get_data(raw_app,app_knn).dropna()
+    data_knn = get_data(raw_app,app_knn)
     return len(data_knn),len(data_knn[data_knn['TARGET']==1])
 
 ## GRAPHE
@@ -194,11 +194,11 @@ def radat_knn_plot(ID,fig,features=features,fill=False):
     data_knn = get_data(raw_app,app_knn).dropna()
     data_knn['TARGET'] = data_knn['TARGET'].astype(int)
     moy_knn = data_knn.groupby('TARGET').mean()
-    ranges = [(min(data_knn['AGE'])-5, max(data_knn['AGE'])+5),
-              (min(data_knn['YEARS_EMPLOYED'])-1,  max(data_knn['YEARS_EMPLOYED'])+1),
-              (min(data_knn['AMT_INCOME_TOTAL'])-500,  max(data_knn['AMT_INCOME_TOTAL'])+500),
-              (min(data_knn['AMT_ANNUITY'])-100,  max(data_knn['AMT_ANNUITY'])+100),
-              (min(data_knn['AMT_CREDIT'])-500,  max(data_knn['AMT_CREDIT'])+500)]
+    ranges = [(min(data_knn['AGE']), max(data_knn['AGE'])),
+              (min(data_knn['YEARS_EMPLOYED']),  max(data_knn['YEARS_EMPLOYED'])),
+              (min(data_knn['AMT_INCOME_TOTAL']),  max(data_knn['AMT_INCOME_TOTAL'])),
+              (min(data_knn['AMT_ANNUITY']),  max(data_knn['AMT_ANNUITY'])),
+              (min(data_knn['AMT_CREDIT']),  max(data_knn['AMT_CREDIT']))]
     
     radar = ComplexRadar(fig,features,ranges)
     radar.plot(data_id,linewidth=3,label='Client '+str(ID),color='darkseagreen')
