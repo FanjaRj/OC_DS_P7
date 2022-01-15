@@ -101,7 +101,7 @@ def get_similar_ID(ID):
 
 def get_stat_ID(ID):   
     app_knn = get_similar_ID(ID)
-    data_knn = get_data(raw_app,app_knn)
+    data_knn = get_data(raw_app,app_knn).dropna()
     return len(data_knn),len(data_knn[data_knn['TARGET']==1])
 
 ## GRAPHE
