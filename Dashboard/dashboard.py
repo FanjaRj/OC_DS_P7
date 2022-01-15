@@ -214,11 +214,10 @@ def shap_id(ID):
     shap.bar_plot(shap_vals[1][0],feature_names=X_name,max_display=10)
     #shap.force_plot(explainer.expected_value[1], shap_vals[1], app_id)
     
-def shap_all():    
-    app_all = app[X_name]
-    st.table(app_all)    
+def shap_all():
+    st.write(X_name)    
+    app_all = app[X_name] 
     shap_values = explainer.shap_values(app_all)
-    st.write('c')    
     shap.summary_plot(shap_values,feature_names=X_name,max_display=10)
 
 
