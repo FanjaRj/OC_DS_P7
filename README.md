@@ -10,7 +10,7 @@ https://www.kaggle.com/c/home-credit-default-risk/data
 - Construire un modèle de scoring qui donnera une prédiction sur la probabilité de faillite d'un client de façon automatique.
 - Construire un dashboard interactif à destination des gestionnaires de la relation client permettant d'interpréter les prédictions faites par le modèle, et d’améliorer la connaissance client des chargés de relation client.
 
-## Résultats
+## Livrables
 ### 1-Développement du modèle de classification
 - P7_Exploration.ipynb : notebook exploration des données issues du kaggle https://www.kaggle.com/c/home-credit-default-risk/data 
 - P7_Cleaning_Engineering.ipynb : notebook data cleaning (inspiré de https://www.kaggle.com/jsaguiar/lightgbm-with-simple-features/script) et feature engineering  (inspiré de https://www.kaggle.com/sz8416/6-ways-for-feature-selection)
